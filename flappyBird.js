@@ -52,7 +52,7 @@ pipe[0] = {
   y: 0
 }
 
-function drw() {
+function draw() {
   ctx.drawImage(bg, 0, 0);
   
   for(let i=0; i<pipe.length; i++) {
