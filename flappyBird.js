@@ -30,6 +30,7 @@ let bX = 20, bY = 150;
 
 //Key events
 document.addEventListener("keydown", moveUp);
+document.addEventListener("click", moveUp);
 function moveUp() { 
   let bYcopy = bY;
   let move = setInterval(function() {
@@ -56,10 +57,10 @@ function draw() {
     
     pipe[i].x-=speed; 
     
-    if(pipe[i].x == 100) {
+    if(pipe[i].x == 80) {
       pipe.push({
         x: w,
-        y: (((Math.random() * 0.6) + 0.4) * pipeNorth.height) - pipeNorth.height + 10
+        y: -Math.ceil((Math.random() * (pipeNorth.height - 10)))
       }); 
     }
     
