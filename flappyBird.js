@@ -6,7 +6,6 @@ let scoreEl = document.getElementById('score');
 scoreEl.innerText = score;
 
 let w = cvs.width;
-let h = cvs.height;
 
 // load images
 let bg = new Image();
@@ -27,21 +26,17 @@ pipeSouth.src = "images/pipeSouth.png";
 //Variables
 let speed = 2;
 let separation = 120;
-let constant = pipeNorth.height + separation;
 let bX = 20, bY = 150;
-let gravity = 3; 
-let distance = 100;
-let fgHeight = h - fg.height;
 
 //Key events
 document.addEventListener("keydown", moveUp);
 function moveUp() { 
   let bYcopy = bY;
   let move = setInterval(function() {
-    if(bYcopy - bY > 60) {
+    if(bYcopy - bY > 50) {
       clearInterval(move);      
     } else {
-      bY-=gravity ;
+      bY-=3 ;
     }
   }, 0);
 }
@@ -57,18 +52,18 @@ function draw() {
   
   for(let i=0; i<pipe.length; i++) {
     ctx.drawImage(pipeNorth, pipe[i].x, pipe[i].y);
-    ctx.drawImage(pipeSouth, pipe[i].x, pipe[i].y+constant);
+    ctx.drawImage(pipeSouth, pipe[i].x, pipe[i].y+pipeNorth.height + 105);
     
     pipe[i].x-=speed; 
     
-    if(pipe[i].x == distance) {
+    if(pipe[i].x == 100) {
       pipe.push({
         x: w,
-        y: (Math.random() * pipeNorth.height) - pipeNorth.height 
+        y: (((Math.random() * 0.6) + 0.4) * pipeNorth.height) - pipeNorth.height + 10
       }); 
     }
     
-    if(bX + bird.width >= pipe[i].x && bX <= pipe[i].x + pipeNorth.width && (bY <= pipe[i].y + pipeNorth.height || bY + bird.height >= pipe[i].y + constant)) {
+    if(bX + bird.width >= pipe[i].x && bX <= pipe[i].x + pipeNorth.width && (bY <= pipe[i].y + pipeNorth.height || bY + bird.height >= pipe[i].y + pipeNorth.height + 105)) {
       return location.reload();
     }
     
@@ -78,12 +73,12 @@ function draw() {
     }
   }
   
-  ctx.drawImage(fg, 0, fgHeight);
+  ctx.drawImage(fg, 0, cvs.height - fg.height);
   
   ctx.drawImage(bird, bX, bY);
-  bY+= gravity; 
+  bY+= 3; 
   
-  if(bY + bird.height > fgHeight) {
+  if((bY + bird.height) > (cvs.height - fg.height)) {
     return location.reload()  ;
   }
 
